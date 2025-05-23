@@ -9,4 +9,5 @@
 
 ## React app
 
+- Build the SDK first
 - `pnpm dev` will locally reference the SDK build
