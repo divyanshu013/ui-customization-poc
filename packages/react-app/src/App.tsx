@@ -38,12 +38,12 @@ const Comment = ({ text, author }) => {
   );
 };
 
-const Comments = ({ comments }) => {
+const Comments = ({ comments, globalCount }) => {
   const [count, setCount] = useState(0);
 
   return (
     <div>
-      Custom Comments UI
+      Custom Comments UI Global count is {globalCount}
       <div>
         {comments.map((comment) => (
           <Comment
@@ -60,9 +60,12 @@ const Comments = ({ comments }) => {
   );
 };
 
-function renderCommentsFromReact({ comments }) {
+function renderCommentsFromReact({ comments, globalCount }) {
   // The id passed here has to be unique for each <Comments /> component (e.g. appends the unique id for comments group), here for demonstration it's not unique and hardcoded
-  return toDOMNode(<Comments comments={comments} />, "COMMENTS");
+  return toDOMNode(
+    <Comments comments={comments} globalCount={globalCount} />,
+    "COMMENTS"
+  );
 }
 
 function App() {
@@ -72,8 +75,10 @@ function App() {
   useEffect(() => {
     load({
       container: sdkContainerRef.current,
-      renderComments: renderCommentsFromReact,
+      renderComments: ({ comments }) =>
+        renderCommentsFromReact({ comments, globalCount: count }),
     });
+    // if we pass global count here, it will end up doing load again
   }, []);
 
   return (
@@ -81,7 +86,7 @@ function App() {
       <div ref={sdkContainerRef} />
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
-          count in react-app {count}
+          global count in react-app {count}
         </button>
       </div>
     </>
