@@ -2,14 +2,19 @@
   "name": "sdk",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "author": "Divyanshu Maithani <div.blackcat@gmail.com> (http://github.com/divyanshu013)",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/sdk.umd.cjs",
+  "module": "dist/sdk.js",
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Comments from "./Comments";
 
 const COMMENTS = [
   {
@@ -24,22 +25,9 @@ const SDK = () => {
   return (
     <main>
       <h1>SDK</h1>
-      <h2>All Comments</h2>
+      <h2>{comments.length} Comments</h2>
       <section>
-        {comments.map((comment) => (
-          <div
-            key={comment.id}
-            style={{
-              margin: "10px",
-              padding: "10px",
-              border: "1px solid #ccc",
-            }}
-          >
-            <p>
-              {comment.text} <em>by {comment.author}</em>
-            </p>
-          </div>
-        ))}
+        <Comments comments={comments} />
       </section>
     </main>
   );
