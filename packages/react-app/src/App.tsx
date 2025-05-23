@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import { SDK } from "sdk";
+import { load, SDK } from "sdk";
 import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
+  const sdkContainerRef = useRef(null);
+
+  useEffect(() => {
+    load({ container: sdkContainerRef.current });
+  }, []);
 
   return (
     <>
-      <SDK />
+      <div ref={sdkContainerRef} />
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
