@@ -19,3 +19,5 @@ export function toDOMNode(app, id) {
 
   return node;
 }
+
+// also need to ensure unmount root
