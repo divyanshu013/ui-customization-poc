@@ -3,13 +3,51 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { load, SDK } from "sdk";
 import "./App.css";
+import { toDOMNode } from "./utils";
+
+function renderCommentsInNode({ comments }) {
+  const div = document.createElement("div");
+  div.innerHTML = JSON.stringify(comments);
+  return div;
+}
+
+const Comments = ({ comments }) => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      Custom Comments UI
+      <div>
+        {comments.map((comment) => (
+          <div
+            key={comment.id}
+            style={{ margin: 4, border: "1px solid hotpink", padding: 4 }}
+          >
+            {comment.text} - by {comment.author}
+          </div>
+        ))}
+      </div>
+      <button onClick={() => setCount((count) => count + 1)}>
+        Local count is {count}
+      </button>
+    </div>
+  );
+};
+
+function renderCommentsFromReact({ comments }) {
+  // The id passed here has to be unique for each <Comments /> component (e.g. appends the unique id for comments group), here for demonstration it's not unique and hardcoded
+  return toDOMNode(<Comments comments={comments} />, "COMMENTS");
+}
 
 function App() {
   const [count, setCount] = useState(0);
   const sdkContainerRef = useRef(null);
 
   useEffect(() => {
-    load({ container: sdkContainerRef.current });
+    load({
+      container: sdkContainerRef.current,
+      renderComments: renderCommentsFromReact,
+    });
   }, []);
 
   return (
